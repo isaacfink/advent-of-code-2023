@@ -1,0 +1,27 @@
+lockfileVersion: '6.0'
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
+dependencies:
+  typescript:
+    specifier: ^5.0.0
+    version: 5.0.2
+
+devDependencies:
+  bun-types:
+    specifier: latest
+    version: 1.0.3
+
+packages:
+
+  /bun-types@1.0.3:
+    resolution: {integrity: sha512-XlyKVdYCHa7K5PHYGcwOVOrGE/bMnLS51y7zFA3ZAAXyiQ6dTaNXNCWTTufgII/6ruN770uhAXphQmzvU/r2fQ==}
+    dev: true
+
+  /typescript@5.0.2:
+    resolution: {integrity: sha512-wVORMBGO/FAs/++blGNeAVdbNKtIh1rbBL2EyQ1+J9lClJ93KiiKe8PmFIVdXhHcyv44SL9oglmfeSsndo0jRw==}
+    engines: {node: '>=12.20'}
+    hasBin: true
+    dev: false
