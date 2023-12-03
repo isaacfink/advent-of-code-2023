@@ -74,7 +74,7 @@ def part_two(value: str) -> int:
         numbers = [getNumbersInRow(x) for x in readings]
 
         def getInRangeNumbersRows(index: int, row: list[list[int]]):
-            return list(filter(lambda x: any(abs(num - index) >= 1 for num in x), row))
+            return list(filter(lambda x: any(abs(num - index) <= 1 for num in x), row))
 
         for fileIndex in range(len(readings)):
             reading = readings[fileIndex]
@@ -84,20 +84,20 @@ def part_two(value: str) -> int:
 
                 if char == "*":
                     rowIndex = [fileIndex]
+                    numbersInRange: list[int] = []
+
                     if fileIndex > 0:
                         rowIndex.append(fileIndex - 1)
                     if fileIndex < len(readings) - 1:
                         rowIndex.append(fileIndex + 1)
-
-                    rowsCombined = [numbers[x] for x in rowIndex]
-                    flattened_list = list(itertools.chain(*rowsCombined))
-
-                    numbersInRange = getInRangeNumbersRows(i, flattened_list)
+                    for j in rowIndex:
+                        l = getInRangeNumbersRows(i, numbers[j])
+                        numbersInRange += [
+                            int("".join(readings[j][x[0] : x[1] + 1])) for x in l
+                        ]
 
                     if len(numbersInRange) == 2:
                         score += numbersInRange[0] * numbersInRange[1]
-
-                    print(numbersInRange)
 
     return score
 
@@ -112,7 +112,9 @@ class Test(unittest.TestCase):
     def test_part_two(self):
         self.assertEqual(part_two("test.txt"), 467835)
 
+    def test_part_two_solution(self):
+        self.assertEqual(part_two("input.txt"), 93994191)
+
 
 if __name__ == "__main__":
     unittest.main()
-    # print(part_two("test.txt"))
