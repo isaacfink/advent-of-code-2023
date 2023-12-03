@@ -1,13 +1,6 @@
 import { readFile } from "fs/promises"
 import { join } from "path"
 
-type Game = {
-    id: number,
-    redCount: number,
-    blueCount: number,
-    greenCount: number
-}
-
 export const partOne = async (value: string) => {
     const maxCounts = {
         blue: 14,
