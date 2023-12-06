@@ -4,24 +4,17 @@ from os import path, getcwd
 
 def part_one(value: str) -> int:
     score = 0
-
     filePath = path.join(getcwd(), "..", "data", value)
 
     with open(filePath, "r") as file:
         rounds = file.readlines()
         time = [int(x) for x in rounds[0].split(":")[1].split()]
         high_scores = [int(x) for x in rounds[1].split(":")[1].split()]
-        # high_scores = int(rounds[1].strip().split(":")[1])
-        print(time, high_scores)
 
         for i in range(len(time)):
-            score_to_beat = high_scores[i]
-            time_to_beat = time[i]
             possible_methods = 0
-
-            for j in range(time_to_beat):
-                achieved_score = j * (time_to_beat - j)
-                if achieved_score > score_to_beat:
+            for j in range(time[i]):
+                if j * (time[i] - j) > high_scores[i]:
                     possible_methods += 1
             score = score * possible_methods if score > 0 else possible_methods
 
@@ -38,22 +31,18 @@ def part_two(value: str) -> int:
 
         score_to_beat = int(rounds[1].split(":")[1].strip().replace(" ", ""))
         time_to_beat = int(rounds[0].split(":")[1].strip().replace(" ", ""))
-        possible_methods = 0
 
-        lowest_possible = 0
-        highest_possible = 0
+        possible_scores = [0, 0]
         for j in range(time_to_beat):
-            achieved_score = j * (time_to_beat - j)
-            if achieved_score > score_to_beat:
-                lowest_possible = j
+            if j * (time_to_beat - j) > score_to_beat:
+                possible_scores[0] = j
                 break
 
         for j in range(time_to_beat, -1, -1):
-            achieved_score = j * (time_to_beat - j)
-            if achieved_score > score_to_beat:
-                highest_possible = j
+            if j * (time_to_beat - j) > score_to_beat:
+                possible_scores[1] = j
                 break
-        score = highest_possible - lowest_possible + 1
+        score = possible_scores[1] - possible_scores[0] + 1
 
     return score
 

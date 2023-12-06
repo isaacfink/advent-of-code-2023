@@ -5,6 +5,15 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Bun: Launch Program",
+            "type": "node", // This may need to be changed depending on your debugger extension
+            "request": "launch",
+            "program": "${file}", // Change this to the path of your Bun.js file
+            "cwd": "${fileDirname}",
+            "runtimeExecutable": "bun", // Specify that Bun is the runtime
+            "console": "integratedTerminal"
+        },
+        {
             "name": "Python: Current File in current file path",
             "cwd": "${fileDirname}",
             "type": "python",
