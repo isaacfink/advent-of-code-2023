@@ -67,10 +67,8 @@ def get_score_for_hand(hand: str, original_hand: str) -> int:
 
 
 def get_joker_replacements(hand: str) -> list[list[str]]:
-    # Identify the positions of the jokers
     joker_positions = [pos for pos, char in enumerate(hand) if char == "J"]
 
-    # Generate all possible combinations of replacements for the jokers
     possible_replacements = []
     for replacement in itertools.product(hands, repeat=len(joker_positions)):
         new_hand = list(hand)
