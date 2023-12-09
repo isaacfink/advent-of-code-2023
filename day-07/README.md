@@ -1,6 +1,6 @@
-Day 05
+Day 01
 
 | Language   | Part one | Part two |
 | ---------- | -------- | -------- |
-| Python     | ✅       | ❌       |
+| Python     | ✅       | ✅       |
 | JavaScript | ✅       | ❌       |
