@@ -1,63 +1,48 @@
 import { readFile } from "fs/promises";
 import { join } from "path";
 
-const instructionsMap: Record<string, number> = {
-  L: 0,
-  R: 1,
-};
+function getDifferences(list: number[]) {
+  let differences = [];
+  for (let i = 0; i < list.length - 2; i++) {
+    differences.push(list[i + 1] - list[i]);
+  }
+  return differences;
+}
 
 export const partOne = async (value: string) => {
-  let steps = 0;
+  let score = 0;
 
-  const rounds: string[] = (
+  const readings: string[] = (
     await readFile(join(import.meta.dir, "..", "data", value), "utf-8")
   ).split("\n");
 
-  const instructions: string[] = rounds[0].split("");
+  for (const reading of readings) {
+    let readingSplit = reading.split(" ").map((r) => parseInt(r));
+    let newReadings = [getDifferences(readingSplit)];
 
-  let map: Record<string, [string, string]> = {};
-
-  for (let i = 2; i < rounds.length; i++) {
-    const [key, value] = rounds[i].split(" = ");
-    const parsedValues = value.split(", ").map((v) => {
-      return v.replace(")", "").replace("(", "");
-    });
-    map[key] = [parsedValues[0], parsedValues[1]];
-  }
-
-  let position: string = "AAA";
-  while (true) {
-    if (position == "ZZZ") {
-      break;
+    while (true) {
+      newReadings.push(getDifferences(newReadings[newReadings.length - 1]));
+      if (newReadings.at(-1)?.every((r) => r == 0)) {
+        break;
+      }
     }
-    let move = instructions[steps % instructions.length];
-    position = map[position][instructionsMap[move]];
-    steps++;
+
+    let reversedNewReadings = newReadings.toReversed();
+    for (let i = 1; i < reversedNewReadings.length; i++) {
+      let values = reversedNewReadings[i];
+      console.log(reversedNewReadings, values);
+      let prevDiff = reversedNewReadings[i - 1].at(-1);
+      console.log("prevDiff: ", prevDiff);
+      values.push(values.at(-1)! + prevDiff!);
+    }
+
+    console.log(reversedNewReadings);
+
+    score += readingSplit.at(-1)! + reversedNewReadings.at(-1)!.at(-1)!;
   }
 
-  return steps;
+  return score;
 };
-
-function gcd(a: number, b: number) {
-  while (b !== 0) {
-    let t = b;
-    b = a % b;
-    a = t;
-  }
-  return a;
-}
-
-function lcm(a: number, b: number) {
-  return (a * b) / gcd(a, b);
-}
-
-function lcmOfList(list: number[]) {
-  let result = list[0];
-  for (let i = 1; i < list.length; i++) {
-    result = lcm(result, list[i]);
-  }
-  return result;
-}
 
 export const partTwo = async (value: string) => {
   let steps = 0;
