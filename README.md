@@ -4,8 +4,6 @@ My attempt for [Advent of Code 2023](https://adventofcode.com/)
 
 ### Progress
 
-Day 09
-
 | Day | Python Part one | Python Part two | JavaScript Part one | JavaScript Part two |
 | --- | --------------- | --------------- | ------------------- | ------------------- |
 | 01  | ✅              | ✅              | ✅                  | ✅                  |
