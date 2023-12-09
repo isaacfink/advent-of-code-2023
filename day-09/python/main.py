@@ -39,14 +39,30 @@ def part_one(value: str) -> int:
 
 
 def part_two(value: str) -> int:
-    scores: int = 0
+    score: int = 0
     filePath = path.join(getcwd(), "..", "data", value)
 
-    map = {}
     with open(filePath, "r") as file:
-        readings = file.readlines()
+        readings = file.read().split("\n")
 
-    return scores
+        for reading in readings:
+            reading_split = [int(x) for x in reading.split(" ")]
+            new_readings = [get_differences(reading_split)]
+            while True:
+                new_readings.append(get_differences(new_readings[-1]))
+                if not any(x != 0 for x in new_readings[-1]):
+                    break
+
+            reversed_new_readings = list(reversed(new_readings))
+            for index, values in enumerate(reversed_new_readings):
+                if index == 0:
+                    continue
+                prev_diff = reversed_new_readings[index - 1][0]
+                values.insert(0, values[0] - prev_diff)
+
+            score += reading_split[0] - reversed_new_readings[-1][0]
+
+    return score
 
 
 class Test(unittest.TestCase):
@@ -59,7 +75,10 @@ class Test(unittest.TestCase):
     def test_part_two(self):
         self.assertEqual(part_two("test.txt"), 2)
 
+    def test_part_two_solution(self):
+        self.assertEqual(part_two("input.txt"), 803)
+
 
 if __name__ == "__main__":
-    unittest.main()
-    # print(part_one("input.txt"))
+    # unittest.main()
+    print(part_two("input.txt"))
