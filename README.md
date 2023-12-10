@@ -15,3 +15,4 @@ My attempt for [Advent of Code 2023](https://adventofcode.com/)
 | 07  | ✅              | ✅              | ✅                  | ❌                  |
 | 08  | ✅              | ✅              | ✅                  | ✅                  |
 | 09  | ✅              | ✅              | ❌                  | ❌                  |
+| 10  | ✅              | ❌              | ❌                  | ❌                  |
